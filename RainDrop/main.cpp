@@ -27,6 +27,20 @@ void main() {
                 app.close();
                 cout << "프로그램 종료" << endl;
             }
+
+            if (event.type == Event::KeyPressed)
+            {
+                switch (event.key.code)
+                {
+                case Keyboard::Left:
+                    sprout.move(-15, 0);
+                    break;
+                case Keyboard::Right:
+                    sprout.move(15, 0);
+                default:
+                    break;
+                }
+            }
         }
 
         app.clear();
