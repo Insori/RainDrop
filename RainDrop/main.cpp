@@ -4,9 +4,17 @@
 using namespace std;
 using namespace sf;
 
-int main() {
+void main() {
+    int x = 325, y = 605;
+
 	RenderWindow app(VideoMode(700, 700), "RainDrop");
 	app.setFramerateLimit(60);	//프레임 비율 설정
+
+    Texture d1, d2;
+    d1.loadFromFile("images/background.png");
+    d2.loadFromFile("images/1.png");
+    Sprite background(d1), sprout(d2);
+    sprout.setPosition(x, y);
 
 	while (app.isOpen()) {
 		Event event;
@@ -21,8 +29,11 @@ int main() {
             }
         }
 
+        app.clear();
+        app.draw(background);
+        app.draw(sprout);
+
         app.display();
 
 	}
-    return 0;
 }
