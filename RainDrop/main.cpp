@@ -1,13 +1,14 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
+//#include <SFML/Audio.hpp>
 
 #define MAX_FIRE 8
 
 using namespace std;
 using namespace sf;
 
-void main()
+int main()
 {
 	//타이머
 	Clock clock;
@@ -24,7 +25,6 @@ void main()
 	d1.loadFromFile("images/background.png");
 	d2.loadFromFile("images/1.png");
 	d3.loadFromFile("images/fire.png");
-	//d4.loadFromFile("images/game_over.png");
 
 	Sprite background(d1), player(d2), fire(d3);;
 	player.setPosition(325, 605);
@@ -59,12 +59,12 @@ void main()
 				cout << "게임 오버" << endl;
 			}
 		}
+
 		//좌우로 움직이기
 		if (Keyboard::isKeyPressed(Keyboard::Right))
 			player.move(7, 0);
 		if (Keyboard::isKeyPressed(Keyboard::Left))
 			player.move(-7, 0);
-
 
 		//불꽃 떨어지기
 		if ((int)interval % 1 == 0)
@@ -75,10 +75,10 @@ void main()
 				(*iter).move(0, rand() % (10 - 7 + 1) + 7);
 
 				Vector2f pos = (*iter).getPosition();
-				if (pos.y > 700) (*iter).setPosition(rand() % 650, -50);
+				if (pos.y > 615) (*iter).setPosition(rand() % 650, -50);
 			}
-		}
 
+		}
 
 		//충돌
 		vector<Sprite>::iterator iter;
@@ -105,4 +105,6 @@ void main()
 		app.display();
 
 	}
+
+	return 0;
 }
