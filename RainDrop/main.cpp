@@ -2,12 +2,12 @@
 #include <iostream>
 #include <vector>
 
-#define MAX_FIRE 5
+#define MAX_FIRE 8
 
 using namespace std;
 using namespace sf;
 
-void main() 
+void main()
 {
 	//타이머
 	Clock clock;
@@ -20,24 +20,23 @@ void main()
 	RenderWindow app(VideoMode(700, 700), "RainDrop");
 	app.setFramerateLimit(60);	//프레임 비율 설정
 
-	Texture d1, d2, d3;
+	Texture d1, d2, d3, d4;
 	d1.loadFromFile("images/background.png");
 	d2.loadFromFile("images/1.png");
 	d3.loadFromFile("images/fire.png");
+	//d4.loadFromFile("images/game_over.png");
 
-	Sprite background(d1), player(d2);
+	Sprite background(d1), player(d2), fire(d3);;
 	player.setPosition(325, 605);
 
-	Sprite fire(d3);
 	vector<Sprite> v_fire;
-
-	for (int i = 0; i < MAX_FIRE; i++) 
+	for (int i = 0; i < MAX_FIRE; i++)
 	{
 		fire.setPosition(rand() % 650, -50);
 		v_fire.push_back(fire);
 	}
 
-	while (app.isOpen()) 
+	while (app.isOpen())
 	{
 
 		float time = clock.getElapsedTime().asSeconds();
@@ -59,7 +58,6 @@ void main()
 				app.close();
 				cout << "게임 오버" << endl;
 			}
-
 		}
 		//좌우로 움직이기
 		if (Keyboard::isKeyPressed(Keyboard::Right))
@@ -67,9 +65,8 @@ void main()
 		if (Keyboard::isKeyPressed(Keyboard::Left))
 			player.move(-7, 0);
 
-		app.clear();
 
-		//불 떨어지기
+		//불꽃 떨어지기
 		if ((int)interval % 1 == 0)
 		{
 			vector<Sprite>::iterator iter;
@@ -78,9 +75,10 @@ void main()
 				(*iter).move(0, rand() % (10 - 7 + 1) + 7);
 
 				Vector2f pos = (*iter).getPosition();
-				if (pos.y > 700) (*iter).setPosition(rand() % 700, 800);
+				if (pos.y > 700) (*iter).setPosition(rand() % 650, -50);
 			}
 		}
+
 
 		//충돌
 		vector<Sprite>::iterator iter;
@@ -90,11 +88,11 @@ void main()
 			{
 				v_fire.erase(v_fire.begin() + i);
 				game_over = true;
+				break;
 			}
 
 		}
 
-		
 		//그리기
 		app.clear();
 		app.draw(background);
